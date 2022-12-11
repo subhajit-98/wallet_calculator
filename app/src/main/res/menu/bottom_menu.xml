@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/product"
+        android:title="Products"
+        android:icon="@drawable/product_icon" />
+    <item
+        android:id="@+id/notifyMe"
+        android:title="notify me"
+        android:icon="@drawable/ic_baseline_menu_24"
+        app:actionViewClass="android.widget.TextView"/>
+    <item
+        android:id="@+id/scanCode"
+        android:title="Scan Code"
+        android:icon="@drawable/scanner_icon"/>
+    <item
+        android:id="@+id/todayEstimate"
+        android:title="Today Estimate"
+        android:icon="@drawable/ic_baseline_menu_24"/>
+    <item
+        android:id="@+id/dashBoard"
+        android:title="Dash Board"
+        android:icon="@drawable/dashboard_icon"/>
+</menu>
