@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import com.example.walletcalculator.R
 import com.example.walletcalculator.activity.HomeActivity
@@ -18,6 +20,7 @@ import java.util.*
 class AddExpenseFragment : Fragment() {
 
     private lateinit var addExpenseBinding: FragmentAddExpenseBinding
+    private val debitedArray = arrayOf("PayTm UPI", "G Pay UPI")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,7 @@ class AddExpenseFragment : Fragment() {
         addExpenseBinding.selectDate.showSoftInputOnFocus= false
         addExpenseBinding.selectDate.isEnabled = false
         // addExpenseBinding.selectDateLayout.error = "aaaaaaaaaaa"
+        addExpenseBinding.selectTime.isEnabled = false
         addExpenseBinding.selectDateLayout.setEndIconOnClickListener {
             dateDialog()?.show()
         }
@@ -46,6 +50,12 @@ class AddExpenseFragment : Fragment() {
         addExpenseBinding.selectTimeLayout.setEndIconOnClickListener {
             timeDialog().show()
         }
+
+        // Spinner
+        val spinnerList = activity?.let {
+                                        ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, debitedArray)
+                                    }
+        addExpenseBinding.fromDebit.setAdapter(spinnerList)
     }
 
     /**
