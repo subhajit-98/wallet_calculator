@@ -3,6 +3,7 @@ package com.example.walletcalculator.fragment
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,6 +16,9 @@ import android.widget.Toast
 import com.example.walletcalculator.R
 import com.example.walletcalculator.activity.HomeActivity
 import com.example.walletcalculator.databinding.FragmentAddExpenseBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddExpenseFragment : Fragment() {
@@ -56,6 +60,14 @@ class AddExpenseFragment : Fragment() {
                                         ArrayAdapter(it, android.R.layout.simple_spinner_dropdown_item, debitedArray)
                                     }
         addExpenseBinding.fromDebit.setAdapter(spinnerList)
+
+        /**
+         * Search product
+         */
+        addExpenseBinding.searchProductText.isEnabled = false
+        addExpenseBinding.searchProductTextLayout.setEndIconOnClickListener {
+            Toast.makeText(activity, "Scan Code", Toast.LENGTH_SHORT).show()
+        }
     }
 
     /**
@@ -63,6 +75,16 @@ class AddExpenseFragment : Fragment() {
      */
     private fun dateDialog(): DatePickerDialog? {
         val c = Calendar.getInstance()
+        if(!addExpenseBinding.selectDate.text.isNullOrEmpty()){
+            /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                val sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH)
+                val date = LocalDate.parse(addExpenseBinding.selectDate.text.toString(), sdf)
+                c.set(date.year, date.monthValue-1, date.dayOfMonth)
+            }*/
+            val sdf = SimpleDateFormat("dd/MM/yyyy")
+            val date: Date = sdf.parse(addExpenseBinding.selectDate.text.toString())
+            c.time = date
+        }
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
@@ -70,7 +92,7 @@ class AddExpenseFragment : Fragment() {
             DatePickerDialog(
                 it,
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    addExpenseBinding.selectDate.setText(""+dayOfMonth+"/"+month+"/"+year)
+                    addExpenseBinding.selectDate.setText(""+dayOfMonth+"/"+(month+1)+"/"+year)
                 },
                 year,month, day
             )
@@ -83,6 +105,11 @@ class AddExpenseFragment : Fragment() {
      */
     private fun timeDialog(): TimePickerDialog{
         val mcurrentTime = Calendar.getInstance()
+        if(!addExpenseBinding.selectTime.text.isNullOrEmpty()){
+            val sdf = SimpleDateFormat("hh:mm")
+            val date: Date = sdf.parse(addExpenseBinding.selectTime.text.toString())
+            mcurrentTime.time = date
+        }
         val hour = mcurrentTime.get(Calendar.HOUR_OF_DAY)
         val minute = mcurrentTime.get(Calendar.MINUTE)
 

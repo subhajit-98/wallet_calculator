@@ -62,10 +62,32 @@
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </LinearLayout>
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search item"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/searchProductTextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/scan_barcode_small"
+                app:startIconDrawable="@drawable/search_icon_small"
+                app:endIconTint="#FF5722"
+                app:startIconTint="#707070"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/searchProductText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Search product"
+                    android:textSize="14sp"
+                    android:paddingTop="11dp"
+                    android:paddingBottom="11dp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
