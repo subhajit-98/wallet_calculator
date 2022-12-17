@@ -117,12 +117,15 @@ open class MainActivity : AppCompatActivity() {
      * Permission all
      */
     public fun permissionAskAll(){
+        val requiredPermission: MutableList<String> = arrayListOf(Manifest.permission.CAMERA, Manifest.permission.CALL_PHONE)
         val permissionRequest: MutableList<String> = ArrayList()
-        if(!permissionCheck(Manifest.permission.CAMERA)){
-            permissionRequest.add(Manifest.permission.CAMERA)
-        }
-        if(!permissionCheck(Manifest.permission.CALL_PHONE)){
-            permissionRequest.add(Manifest.permission.CALL_PHONE)
+
+        if(requiredPermission.size > 0){
+            for (premission in requiredPermission){
+                if(!permissionCheck(premission)){
+                    permissionRequest.add(premission)
+                }
+            }
         }
 
         if(permissionRequest.isNotEmpty()) {
