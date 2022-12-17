@@ -1,10 +1,13 @@
 package com.example.walletcalculator.fragment
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,9 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import com.example.walletcalculator.R
 import com.example.walletcalculator.activity.HomeActivity
+import com.example.walletcalculator.activity.MainActivity
 import com.example.walletcalculator.databinding.FragmentAddExpenseBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -66,7 +71,23 @@ class AddExpenseFragment : Fragment() {
          */
         addExpenseBinding.searchProductText.isEnabled = false
         addExpenseBinding.searchProductTextLayout.setEndIconOnClickListener {
-            Toast.makeText(activity, "Scan Code", Toast.LENGTH_SHORT).show()
+            if(!(activity as MainActivity).permissionCheck(Manifest.permission.CAMERA)) {
+                if(!(activity as MainActivity).permissionAsk(Manifest.permission.CAMERA, 1)) {
+                    val respAlert = (activity as MainActivity).alertMessage(false, "Permission Requirment", "Need to camera permission mandatory")
+                    respAlert.show()
+                    respAlert.findViewById<TextView>(R.id.submit)?.setOnClickListener {
+                        // Toast.makeText(activity, "Scan Code", Toast.LENGTH_SHORT).show()
+                        val intent: Intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        val uri = Uri.fromParts("package", (activity as MainActivity).packageName, null)
+                        intent.data = uri
+                        startActivity(intent)
+                        respAlert.cancel()
+                    }
+                    respAlert.findViewById<TextView>(R.id.cancel)?.setOnClickListener {
+                        respAlert.cancel()
+                    }
+                }
+            }
         }
     }
 
